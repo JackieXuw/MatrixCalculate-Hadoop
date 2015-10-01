@@ -50,6 +50,17 @@ def main():
                 dictB[identifier] = int(val)                
             lastKeyI = keyI
             lastKeyJ = keyJ
+    # if dicts is not empty, then there is still a group of value need to be calculated and printed out
+    if dictA:
+        # now calculate the current block's value
+        currentVal = 0;
+        for ident in dictA:
+            # check if the identifier is also in dictB
+            if ident in dictB:
+                currentVal += dictA[ident] * dictB[ident]
+        # finish sum up, if sum isn't 0, then write it out
+        if currentVal != 0:
+            print '%s %s %s' % (lastKeyI, lastKeyJ, currentVal)
 
 if __name__ == "__main__":
     main()
