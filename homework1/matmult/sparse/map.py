@@ -5,8 +5,9 @@
 import sys
 
 def main():
-    M, P, N = 100, 100, 100
-    # M, P, N = 4, 4, 4
+    M, N = 100, 100
+    # M, N = 4, 4
+    # M, N = 2, 3
     # input comes from STDIN (standard input)
     for line in sys.stdin:
         # remove leading and trailing whitespace
