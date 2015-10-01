@@ -1,0 +1,7 @@
+1- Write a python code that generates two dense matricies each of dimention N by N
+
+2- Write a code that multiplies the two matricies and hand it in.
+
+3- Decribe your algorithm, can you do better? If so, decribe your idea and write the code.
+
+4- Develop a model for the communication cost of your algorithm. (hine: tile/block sizes in your algorithm will be the main parameters in your model) 

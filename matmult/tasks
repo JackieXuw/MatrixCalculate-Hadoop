@@ -1,0 +1,5 @@
+1- Write the reduce and map python files that can read the input file for matricies A and B, and output their multiplication. Hand-in both code files.
+
+2- You should create a makefile similar to the one in wordcount example and hand it in.
+
+3- Hand-in the outputfile (result file)

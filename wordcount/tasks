@@ -1,0 +1,12 @@
+1- Go to the java directory and compile and run the code using the Makefile
+
+2- Screenprint the output
+
+3- Copy the Makefile to a text file and comment what each line does
+
+4- Go to the streaming directory and write map.py and reduce.py, hand-in the code
+
+5- Edit the makefile in the streaming directory to compile correctly and hand-in the makefile
+
+  
+
