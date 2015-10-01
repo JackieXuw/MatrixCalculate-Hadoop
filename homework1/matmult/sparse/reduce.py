@@ -17,7 +17,7 @@ def main():
         line = line.strip()
         # parse the input we got from map.py
         keyI, keyJ, matrix, identifier, val = line.split(' ')
-        print '%s %s %s %s %s' % (keyI, keyJ, matrix, identifier, val)
+        # print '%s %s %s %s %s' % (keyI, keyJ, matrix, identifier, val)
 
         #skip the first one
         if lastKeyI:
@@ -30,8 +30,8 @@ def main():
                     if ident in dictB:
                         currentVal += dictA[ident] * dictB[ident]
                 # finish sum up, if sum isn't 0, then write it out
-                # if currentVal != 0:
-                    # print '%s %s %s' % (lastKeyI, lastKeyJ, currentVal)
+                if currentVal != 0:
+                    print '%s %s %s' % (lastKeyI, lastKeyJ, currentVal)
                 # key pair is changed, record it
                 lastKeyI = keyI
                 lastKeyJ = keyJ
