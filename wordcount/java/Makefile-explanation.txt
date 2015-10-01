@@ -1,0 +1,62 @@
+# define some needed paths and store them into variables 
+EXAMPLE_DIR = /user/$(USER)/wordcount
+INPUT_DIR   = $(EXAMPLE_DIR)/input
+OUTPUT_DIR  = $(EXAMPLE_DIR)/output
+OUTPUT_FILE = $(OUTPUT_DIR)/part-r-00000
+
+# call a shell script -> hadoop classpath -> to print out the classpath needed by compiling java code in hadoop, store this classpath into CLASSPATH variable 
+CLASSPATH=$(shell hadoop classpath)
+
+# for run option in makefile, used to run the java wordcound program
+# setup the dependency, to enter the run option, the wordcount.jar and inputs should be exist
+run: wordcount.jar inputs
+	# force to delete the output folder in hdfs
+	-hdfs dfs -rm -f -r $(OUTPUT_DIR)
+	# submit the jar package to hadoop and start to run it, input and output is the input argument for the program, '\' means the two lines is actually a line
+	hadoop jar wordcount.jar WordCount \
+	       $(INPUT_DIR) $(OUTPUT_DIR)
+	# cat out all the things in the output folder in hdfs
+	hdfs dfs -cat wordcount/output/"*"
+
+# for wordcount.jar option in makefile, used to compile the java code, also package all the compiled classes into a jar file
+# setup the dependency, to enter the wordcount.jar option, the wordcount.java should be exist
+wordcount.jar: WordCount.java
+	# create wordcount_classes folder in the local machine
+	mkdir -p wordcount_classes
+	# use java compiler to comile WordCount.java with specific flags/classes, put the class files into wordcount_classes folder
+	javac -classpath $(CLASSPATH) -Xlint:deprecation \
+ 	      -d wordcount_classes WordCount.java
+ 	# package the classes in wordcount_classes folder and in current folder into wordcount.jar
+	jar -cvf wordcount.jar -C wordcount_classes .
+
+# for inputdir option in makefile, used to create the input folder in hdfs
+inputdir:
+	# first test whether the example folder and input folder is exist in hdfs, if not, create these folders in hdfs
+	hdfs dfs -test -e $(EXAMPLE_DIR) || hdfs dfs -mkdir $(EXAMPLE_DIR)
+	hdfs dfs -test -e $(INPUT_DIR) || hdfs dfs -mkdir $(INPUT_DIR)
+
+# for inputdir option in makefile, used to 
+outputdir:
+	# first test whether the output folder is exist in hdfs, if not, create it in hdfs	
+	hdfs dfs -test -e $(OUTPUT_DIR) || hdfs dfs -mkdir $(OUTPUT_DIR)
+
+# for inputdir option in makefile, used to create the output folder in hdfs
+inputs: inputdir
+	# first test if the two input files is in hdfs, if not, copy it from local machine
+	hdfs dfs -test -e $(INPUT_DIR)/file01 \
+	  || hdfs dfs -put ../input-small/file01 $(INPUT_DIR)/file01
+	hdfs dfs -test -e $(INPUT_DIR)/file02 \
+	  || hdfs dfs -put ../input-small/file02 $(INPUT_DIR)/file02
+
+# for inputdir option in makefile, used to delete all the created files/folders, including jar file, classes in local machine and all folders and files created in hdfs
+clean:
+	# delete jar and classes in local
+	-rm *.jar
+	-rm -r *_classes
+	# delete the example folder, input folder and files, output folder and files in hdfs
+	-hdfs dfs -rm -f -r $(INPUT_DIR)
+	-hdfs dfs -rm -f -r $(OUTPUT_DIR)
+	-hdfs dfs -rm -f -r $(EXAMPLE_DIR)
+
+# make phony targets that are always out-of-date, so script associated with follow targets would always be run, no matter whether you happen to have a file with the same name as these targets
+.PHONY: clean run directories inputs
