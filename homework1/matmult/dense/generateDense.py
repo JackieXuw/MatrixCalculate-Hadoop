@@ -23,7 +23,7 @@ def main(argv):
 	print 'Now generating matrices...'
 	# start to generate the matrices
 	# the output matrix is in this format:
-	# matrix name + row number + value + value + ...
+	# matrix name + max row/col + row number + value + value + ...
 	# elements are delimitted by a single space
 	
 	# open the file and prepare to write to it
@@ -31,7 +31,8 @@ def main(argv):
 	# generate matrix A
 	for row in xrange(0, N):
 		line = 'A '
-		line +=  str(row) + ' '
+		line += str(N) + ' '
+		line += str(row) + ' '
 		for col in xrange(0, N):
 			line += str(randS()) + ' '
 		print line
@@ -42,7 +43,8 @@ def main(argv):
 	# generate matrix B
 	for row in xrange(0, N):
 		line = 'B '
-		line +=  str(row) + ' '
+		line += str(N) + ' '
+		line += str(row) + ' '
 		for col in xrange(0, N):
 			line += str(randS()) + ' '
 		print line

@@ -26,12 +26,14 @@ run: inputs
 run-2reducers: inputs
 	-hdfs dfs -rm -f -r $(OUTPUT_DIR)
 	hadoop jar $(TOOLLIBS_DIR)/hadoop-streaming-$(HADOOP_VERSION).jar \
-                -D mapred.reduce.tasks=2 \
+                -D mapreduce.job.reduces=2 \
 		-files ./map.py,./reduce.py \
 		-mapper ./map.py \
 		-reducer ./reduce.py \
 		-input $(INPUT_DIR) \
-		-output  $(OUTPUT_DIR) 
+		-output  $(OUTPUT_DIR) \
+		-jobconf stream.num.map.output.key.fields=2 \
+		-jobconf stream.map.output.field.separator='\t'
 	echo "===$(OUTPUT_FILE)==="
 	hdfs dfs -cat $(OUTPUT_FILE)
 	echo "===$(OUTPUT_FILE_2)==="

@@ -1,4 +1,4 @@
-EXAMPLE_DIR = /user/$(USER)/matmult-stream/
+EXAMPLE_DIR = /user/$(USER)/matmult-dense/
 INPUT_DIR   = $(EXAMPLE_DIR)/input
 OUTPUT_DIR  = $(EXAMPLE_DIR)/output
 OUTPUT_FILE = $(OUTPUT_DIR)/part-00000
@@ -43,7 +43,7 @@ directories:
 
 inputs: directories
 	hdfs dfs -test -e $(INPUT_DIR)/part-00000 \
-	  || hdfs dfs -put ../input/part-00000 $(INPUT_DIR)/part-00000
+	  || hdfs dfs -put matrices $(INPUT_DIR)/part-00000
 
 clean:
 	-hdfs dfs -rm -f -r $(INPUT_DIR)
