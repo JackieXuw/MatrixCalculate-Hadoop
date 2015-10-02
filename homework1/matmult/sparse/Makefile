@@ -19,7 +19,8 @@ run: inputs
 		-input $(INPUT_DIR) \
 		-output  $(OUTPUT_DIR) \
 		-numReduceTasks 1 \
-		-jobconf stream.num.map.output.key.fields=2
+		-jobconf stream.num.map.output.key.fields=2 \
+		-jobconf stream.map.output.field.separator='\t'
 	hdfs dfs -cat $(OUTPUT_FILE)
 
 run-2reducers: inputs

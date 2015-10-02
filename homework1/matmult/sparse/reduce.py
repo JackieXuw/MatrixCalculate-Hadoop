@@ -16,8 +16,9 @@ def main():
         # remove leading and trailing whitespace
         line = line.strip()
         # parse the input we got from map.py
-        keyI, keyJ, matrix, identifier, val = line.split(' ')
-        # print '%s %s %s %s %s' % (keyI, keyJ, matrix, identifier, val)
+        keyI, keyJ, matrix, identifier, val = line.split('\t')
+        # debug use
+        # print '%s\t%s\t%s\t%s\t%s' % (keyI, keyJ, matrix, identifier, val)
 
         #skip the first one
         if lastKeyI:
