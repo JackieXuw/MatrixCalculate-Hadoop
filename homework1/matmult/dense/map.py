@@ -54,8 +54,8 @@ def main():
             # now create the key and value pair
             blockKey = str(currentBlockRow) + '\t'
             blockKey += str(currentBlockCol) + '\t'
-            tuples = matrix + '\t'
-            tuples += str(curRow % blockRow)
+            tuples = str(curRow % blockRow) + '\t'
+            tuples += matrix
 
             # start retrieving current block
             i = 0

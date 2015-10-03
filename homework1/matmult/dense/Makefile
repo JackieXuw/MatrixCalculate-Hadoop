@@ -19,7 +19,9 @@ run: inputs
 		-input $(INPUT_DIR) \
 		-output  $(OUTPUT_DIR) \
 		-numReduceTasks 1 \
-		-jobconf stream.num.map.output.key.fields=2
+		-jobconf stream.num.map.output.key.fields=4 \
+		-jobconf stream.map.output.field.separator='\t' \
+		-jobconf mapreduce.partition.keypartitioner.options=-k1,3
 	hdfs dfs -cat $(OUTPUT_FILE)
 
 run-2reducers: inputs
@@ -42,8 +44,8 @@ directories:
 	hdfs dfs -test -e $(OUTPUT_DIR) || hdfs dfs -mkdir $(OUTPUT_DIR)
 
 inputs: directories
-	hdfs dfs -test -e $(INPUT_DIR)/part-00000 \
-	  || hdfs dfs -put matrices $(INPUT_DIR)/part-00000
+	hdfs dfs -test -e $(INPUT_DIR)/matrices \
+	  || hdfs dfs -put matrices $(INPUT_DIR)/matrices
 
 clean:
 	-hdfs dfs -rm -f -r $(INPUT_DIR)
