@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# in this mappper and reducer, a precondition is that the matrices are square
 
 import sys
 
