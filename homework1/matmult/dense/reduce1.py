@@ -49,9 +49,11 @@ def main():
                 # finished current section, now print it
                 for i in xrange(0, m):
                     for j in xrange(0, p):
-                        hashKey = str(i) + ',' + str(j)
-                        # convert the block position back to matrix position
-                        print '%s\t%s\t%s' % (int(lastKeyI) * m + i, int(lastKeyK) * p + j, resultMap[hashKey])
+                        # do not overflow
+                        if int(lastKeyI) * m + i < M and int(lastKeyK) * p + j < P:
+                            hashKey = str(i) + ',' + str(j)
+                            # convert the block position back to matrix position
+                            print '%s\t%s\t%s' % (int(lastKeyI) * m + i, int(lastKeyK) * p + j, resultMap[hashKey])
                 # reinitialize the containers
                 listA = []
                 listB = []
@@ -92,9 +94,11 @@ def main():
         # finished current section, now print it
         for i in xrange(0, m):
             for j in xrange(0, p):
-                hashKey = str(i) + ',' + str(j)
-                # convert the block position back to matrix position
-                print '%s\t%s\t%s' % (int(lastKeyI) * m + i, int(lastKeyK) * p + j, resultMap[hashKey])
+                # do not overflow
+                if int(lastKeyI) * m + i < M and int(lastKeyK) * p + j < P:
+                    hashKey = str(i) + ',' + str(j)
+                    # convert the block position back to matrix position
+                    print '%s\t%s\t%s' % (int(lastKeyI) * m + i, int(lastKeyK) * p + j, resultMap[hashKey])
 
 if __name__ == "__main__":
     main()
