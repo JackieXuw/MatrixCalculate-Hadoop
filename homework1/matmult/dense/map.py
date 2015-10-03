@@ -23,7 +23,7 @@ def main():
         # get the current row
         curRow = int(elements[1])
 
-        # consider the matrix size could be super large, and might not be able to fit in memory, so we emit this block by block
+        # consider the matrix size could be super large, and might not be able to fit in memory, so we do the calculatation block by block
         if matrix == 'A':
             if P % p == 0:
                 emitNumber = P / p
@@ -55,23 +55,19 @@ def main():
             blockKey = str(currentBlockRow) + '\t'
             blockKey += str(currentBlockCol) + '\t'
             tuples = str(curRow % blockRow) + '\t'
-            tuples += matrix
 
             # start retrieving current block
             i = 0
             while curColPos + i < totalCol and i < blockCol:
-                tuples += '\t' + str(elements[2 + curColPos + i])
+                # emit the whole message in this format:
+                # (blockkey -> three values), (matrix name, row position in block, column position in block, value)
+                if matrix == 'A':
+                    for j in xrange(0, emitNumber):
+                        print (blockKey + str(j) + '\t' + tuples + str(i) + '\t' + matrix + '\t' + str(elements[2 + curColPos + i]))
+                elif matrix == 'B':
+                    for j in xrange(0, emitNumber):
+                        print (str(j) + '\t' + blockKey + tuples + str(i) + '\t' + matrix + '\t' + str(elements[2 + curColPos + i]))
                 i += 1
-            # emit the whole message in this format:
-            # (blockkey -> three values), (matrix name, row position in block, all values for one row in this block)
-            # used for debug
-            # print (blockKey + tuples)
-            if matrix == 'A':
-                for j in xrange(0, emitNumber):
-                    print (blockKey + str(j) + '\t' + tuples)
-            elif matrix == 'B':
-                for j in xrange(0, emitNumber):
-                    print (str(j) + '\t' + blockKey + tuples)
 
             # increase current block number in column, continue looping
             currentBlockCol += 1
