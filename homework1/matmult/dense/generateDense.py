@@ -10,28 +10,29 @@ def randS():
 
 def main(argv):
 	# judge if input is correct
-	if len(sys.argv) != 2:
-		print 'please in put one number for creating dense matrix'
+	if len(sys.argv) != 4:
+		print 'please enter three number (M, N, P) for creating dense matrix M * N & N * P'
 		sys.exit()
 	try:
-		N = int(argv[0])
-		print 'Input number is:', N
+		M = int(argv[0])
+		N = int(argv[1])
+		P = int(argv[2])
+		print 'Input number is:', M, N, P
 	except ValueError:
-		print 'please in put one number for creating dense matrix'
+		print 'please enter three number (M, N, P) for creating dense matrix M * N & N * P'
 		sys.exit()
 
 	print 'Now generating matrices...'
 	# start to generate the matrices
 	# the output matrix is in this format:
-	# matrix name + max row/col + row number + value + value + ...
+	# matrix name + row number + value + value + ...
 	# elements are delimitted by a single space
 	
 	# open the file and prepare to write to it
 	matrices = open('matrices','w')
 	# generate matrix A
-	for row in xrange(0, N):
+	for row in xrange(0, M):
 		line = 'A '
-		line += str(N) + ' '
 		line += str(row) + ' '
 		for col in xrange(0, N):
 			line += str(randS()) + ' '
@@ -43,9 +44,8 @@ def main(argv):
 	# generate matrix B
 	for row in xrange(0, N):
 		line = 'B '
-		line += str(N) + ' '
 		line += str(row) + ' '
-		for col in xrange(0, N):
+		for col in xrange(0, P):
 			line += str(randS()) + ' '
 		print line
 		# now write this line to file
