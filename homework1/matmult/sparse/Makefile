@@ -10,6 +10,10 @@ HADOOP_PREFIX = /usr/local/hadoop
 
 TOOLLIBS_DIR=$(HADOOP_PREFIX)/share/hadoop/tools/lib/
 
+# run in local mode instead of hadoop
+local: map.py reduce.py
+	cat ../input/part-00000 | ./map.py | sort -k1,2 | ./reduce.py
+
 run: inputs
 	-hdfs dfs -rm -f -r $(OUTPUT_DIR)
 	hadoop jar $(TOOLLIBS_DIR)/hadoop-streaming-$(HADOOP_VERSION).jar \
